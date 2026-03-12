@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shamim Akthar | Data Science Portfolio</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- Ultra UI/UX Design System --- */
+        :root {
+            --bg-color: #030305;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-primary: #a855f7; /* Neon Purple */
+            --accent-secondary: #22d3ee; /* Electric Cyan */
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Dynamic Background Orbs --- */
+        .orb-1, .orb-2 {
+            position: fixed;
+            width: 50vw;
+            height: 50vw;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            animation: float 10s infinite alternate ease-in-out;
+            opacity: 0.4;
+        }
+        
+        .orb-1 {
+            top: -20%;
+            left: -10%;
+            background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+        }
+
+        .orb-2 {
+            bottom: -20%;
+            right: -10%;
+            background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 70%);
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.1); }
+        }
+
+        /* Container & Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: fadeInDown 1s ease-out forwards;
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            color: var(--accent-secondary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin-bottom: 3rem;
+        }
+
+        /* Glowing Button */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 1rem 2.5rem;
+            background: rgba(255,255,255,0.03);
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:hover {
+            background: rgba(168, 85, 247, 0.1);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+            transform: translateY(-3px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border-color: var(--accent-secondary);
+            color: var(--accent-secondary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(34, 211, 238, 0.1);
+            border-color: var(--accent-secondary);
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+        }
+
+        /* --- Universal Section Titles --- */
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-title i {
+            color: var(--accent-primary);
+        }
+
+        /* --- Cards & Grids --- */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(168, 85, 247, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 
+                        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .card h4 {
+            font-size: 1rem;
+            color: var(--accent-secondary);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .card p, .card ul {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .card ul {
+            padding-left: 1.2rem;
+        }
+
+        .card ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            background: rgba(34, 211, 238, 0.05);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            color: var(--accent-secondary);
+        }
+
+        /* --- Skills Section --- */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .skills-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+
+        .skill-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 1rem 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+        }
+
+        .skill-badge:hover {
+            border-color: var(--accent-secondary);
+            background: rgba(34, 211, 238, 0.1);
+            transform: scale(1.05);
+        }
+
+        .skill-badge i {
+            color: var(--accent-primary);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-secondary);
+        }
+
+        /* Keyframes */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="orb-1"></div>
+    <div class="orb-2"></div>
+
+    <div class="container">
+        
+        <section class="hero">
+            <h2>Data Science & Analytics</h2>
+            <h1>Shamim Akthar</h1>
+            <p>As a final-year BSc Data Science student, I
+am seeking for internship and job to apply my
+academic knowledge to real-world
+projects. I am eager to gain hands-on
+experience, learn from industry
+professionals, and contribute to a team
+environment. My goal is to enhance my
+skills in data analysis, programming, and
+problem-solving while understanding how
+data drives business outcomes.</p>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="#experience" class="btn">
+                    View Experience <i class="fa-solid fa-arrow-down"></i>
+                </a>
+                <a href="https://github.com/itsakthar/Data-Science" target="_blank" class="btn btn-outline">
+                    <i class="fa-brands fa-github"></i> GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/shamim-akthar-8469192a9" target="_blank" class="btn btn-outline">
+                    <i class="fa-brands fa-linkedin"></i> LinkedIn
+                </a>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2 class="section-title"><i class="fa-solid fa-briefcase"></i> Experience & Projects</h2>
+            <div class="grid-layout">
+                
+                <div class="card fade-element">
+                    <i class="fa-solid fa-building card-icon"></i>
+                    <h3>Data Science Intern</h3>
+                    <h4>CodeTech IT Solutions Pvt. Ltd. | Dec 2025 - Jan 2026</h4>
+                    <ul>
+                        <li>Built a robust data preprocessing and ETL pipeline utilizing Python, Pandas, and Scikit-learn.</li>
+                        <li>Worked on end-to-end data science tasks, from initial data preparation through to model development.</li>
+                        <li>Applied statistical and analytical techniques to solve business-oriented problems.</li>
+                        <li>Maintained strict project code versioning and documentation using GitHub.</li>
+                    </ul>
+                    <div class="tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Pandas</span>
+                        <span class="tag">ETL Pipeline</span>
+                        <span class="tag">Scikit-learn</span>
+                    </div>
+                </div>
+
+                <div class="card fade-element">
+                    <i class="fa-solid fa-code-branch card-icon"></i>
+                    <h3>Data Science Repository</h3>
+                    <h4>Open Source & Academic Projects</h4>
+                    <p>A comprehensive collection of my data science projects, featuring Python-based scripts, data analysis workflows, and exploratory data visualizations.</p>
+                    <div class="tags">
+                        <span class="tag">Jupyter Notebooks</span>
+                        <span class="tag">Data Analysis</span>
+                        <span class="tag">Machine Learning</span>
+                    </div>
+                    <a href="https://github.com/itsakthar/Data-Science" target="_blank" class="btn" style="padding: 0.5rem 1.5rem; font-size: 0.9rem; align-self: flex-start;">
+                        View Repository <i class="fa-solid fa-external-link-alt"></i>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2 class="section-title"><i class="fa-solid fa-code"></i> Technical Skills</h2>
+            <div class="skills-container fade-element">
+                <div class="skill-badge"><i class="fa-brands fa-python"></i> Python</div>
+                <div class="skill-badge"><i class="fa-solid fa-table"></i> Pandas</div>
+                <div class="skill-badge"><i class="fa-solid fa-file-excel"></i> Microsoft Excel</div>
+                <div class="skill-badge"><i class="fa-solid fa-chart-line"></i> Data Analysis</div>
+                <div class="skill-badge"><i class="fa-solid fa-broom"></i> Data Cleaning</div>
+                <div class="skill-badge"><i class="fa-brands fa-html5"></i> HTML</div>
+                <div class="skill-badge"><i class="fa-brands fa-css3-alt"></i> CSS</div>
+            </div>
+        </section>
+
+        <section id="education">
+            <h2 class="section-title"><i class="fa-solid fa-graduation-cap"></i> Education & Certifications</h2>
+            <div class="grid-layout">
+                
+                <div class="card fade-element">
+                    <i class="fa-solid fa-university card-icon"></i>
+                    <h3>Techno India University</h3>
+                    <h4>B.Sc. Data Science | Expected Jan 2026</h4>
+                    <p>Currently in final year, focusing on advanced analytics, statistical modeling, and data engineering.</p>
+                    
+                    <hr style="border-color: var(--glass-border); margin: 1.5rem 0;">
+                    
+                    <h3>Previous Education</h3>
+                    <ul style="margin-bottom: 0;">
+                        <li><strong>Higher Secondary (B.Sc):</strong> Natni High School (May 2023)</li>
+                        <li><strong>Secondary Education:</strong> Rajballavpur High School (Jan 2018)</li>
+                    </ul>
+                </div>
+
+                <div class="card fade-element">
+                    <i class="fa-solid fa-certificate card-icon"></i>
+                    <h3>Certifications</h3>
+                    <h4>Professional Development</h4>
+                    <ul>
+                        <li><strong>Data Science Internship Certificate</strong> <br> CodeTech IT Solutions Pvt. Ltd.</li>
+                        <li style="margin-top: 1rem;"><strong>Artificial Intelligence Workshop</strong> <br> IBM</li>
+                    </ul>
+                    <div class="tags" style="margin-top: 2rem;">
+                        <span class="tag">Languages: English, Bengali, Hindi</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <footer id="contact">
+        <div class="social-links">
+            <a href="mailto:itsakthar444@gmail.com" title="Email Me"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://www.linkedin.com/in/shamim-akthar-8469192a9" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://github.com/itsakthar/Data-Science" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="tel:+918016766346" title="Call Me"><i class="fa-solid fa-phone"></i></a>
+        </div>
+        <p>itsakthar444@gmail.com | +91 80167 66346</p>
+        <p>&copy; 2026 Shamim Akthar</p>
+    </footer>
+
+    <script>
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-element').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
